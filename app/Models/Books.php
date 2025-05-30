@@ -1,0 +1,48 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
+
+class Books extends Model
+{
+    use HasUlids;
+
+
+    protected $primaryKey = 'books_id'; 
+    public $incrementing = false;
+    protected $keyType = 'string';
+
+    protected $table = 'books';
+
+    protected $fillable = [
+        'title',
+        'isbn',
+        'publisher',
+        'year_published',
+        'stock',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'title' => 'string',
+            'isbn' => 'string',
+            'publisher' => 'string',
+            'year_published' => 'string',
+            'stock' => 'integer',
+        ];
+    }
+
+    public function loans()
+    {
+        return $this->hasMany(Loans::class, 'books_id', 'books_id');
+    }
+
+    public function book_author()
+    {
+        return $this->hasMany(BooksAuthor::class, 'books_id', 'books_id');
+    }
+
+}
