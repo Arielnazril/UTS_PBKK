@@ -9,15 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+
     public function up(): void
     {
         Schema::create('loans', function (Blueprint $table) {
-            $table->ulid('loan_id')->primary();
-            $table->string('user_id');
-            $table->string('book_id');
+            $table->ulid('id')->primary();
+            $table->foreignUlid('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignUlid('book_id')->constrained('books')->cascadeOnDelete();
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.

@@ -4,14 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Loans extends Model
 {
     use HasUlids;
-    
-    protected $primaryKey = 'loan_id';
-    public $incrementing = false; 
-    protected $keyType = 'string';
 
     protected $table = 'loans';
 
@@ -20,7 +18,6 @@ class Loans extends Model
         'book_id',
     ];
 
-    
     protected function casts(): array
     {
         return [
@@ -29,14 +26,14 @@ class Loans extends Model
         ];
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    // Relasi ke Book
-    public function book()
+    public function book(): BelongsTo
     {
-        return $this->belongsTo(Books::class, 'book_id', 'book_id');
+        return $this->belongsTo(Books::class, 'book_id');
     }
+
 }

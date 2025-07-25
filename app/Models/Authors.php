@@ -2,22 +2,19 @@
 
 namespace App\Models;
 
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Authors extends Model
 {
     use HasUlids;
-    
-    protected $primaryKey = 'author_id';
-    public $incrementing = false; 
-    protected $keyType = 'string';
 
     protected $table = 'authors';
-    
+
     protected $fillable = [
         'name',
         'nationality',
@@ -33,8 +30,10 @@ class Authors extends Model
         ];
     }
 
-    public function book_author()
+
+    public function bookAuthors(): HasMany
     {
-        return $this->hasMany(BooksAuthor::class, 'author_id', 'author_id');
+        return $this->hasMany(BooksAuthor::class, 'author_id');
     }
+
 }

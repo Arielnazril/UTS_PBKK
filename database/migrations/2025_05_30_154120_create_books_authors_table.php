@@ -9,14 +9,13 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+
     public function up(): void
     {
         Schema::create('book_authors', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->ulid('book_id');
-            $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
-            $table->ulid('author_id');
-            $table->foreign('author_id')->references('id')->on('authors')->onDelete('cascade');
+            $table->foreignUlid('book_id')->constrained('books')->cascadeOnDelete();
+            $table->foreignUlid('author_id')->constrained('authors')->cascadeOnDelete();
             $table->timestamps();
         });
     }

@@ -4,25 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Books extends Model
 {
+
     use HasUlids;
 
-
-    protected $primaryKey = 'books_id'; 
-    public $incrementing = false;
-    protected $keyType = 'string';
-
-    protected $table = 'books';
-
-    protected $fillable = [
+    protected $fillable =[
         'title',
         'isbn',
         'publisher',
         'year_published',
-        'stock',
+        'stock'
     ];
+
+    protected $table = 'books';
 
     protected function casts(): array
     {
@@ -31,18 +29,16 @@ class Books extends Model
             'isbn' => 'string',
             'publisher' => 'string',
             'year_published' => 'string',
-            'stock' => 'integer',
         ];
     }
 
-    public function loans()
+    public function loans(): BelongsToMany
     {
-        return $this->hasMany(Loans::class, 'books_id', 'books_id');
+        return $this->belongsToMany(Loans::class,  'book_id');
     }
 
-    public function book_author()
+    public function bookAuthors(): HasMany
     {
-        return $this->hasMany(BooksAuthor::class, 'books_id', 'books_id');
+        return $this->hasMany(BooksAuthor::class, 'book_id');
     }
-
 }

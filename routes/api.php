@@ -9,6 +9,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AuthorsController;
 use App\Http\Controllers\BookAuthorController;
 use App\Http\Controllers\BooksAuthorController;
+use App\Http\Controllers\DashboardController;
 
 Route::post('/login', [AuthController::class, 'login']);
 
@@ -20,6 +21,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('book', BooksController::class);
     Route::apiResource('author', AuthorsController::class);
     Route::apiResource('loans', LoansController::class);
-    Route::apiResource('BookAuthor', BooksAuthorController::class);
+    Route::apiResource('book-author', BooksAuthorController::class);
+    Route::get('/dashboard', [DashboardController::class, 'index']);
    
 });

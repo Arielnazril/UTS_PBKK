@@ -32,7 +32,7 @@ class LoansController extends Controller
         try {
             $request->validate([
                 'user_id' => 'required|string|max:255|exists:users,id',
-                'book_id' => 'required|string|max:255|exists:books,book_id',
+                'book_id' => 'required|string|max:255|exists:books,id',
             ]);
     
             $loan = Loans::create([
@@ -57,7 +57,7 @@ class LoansController extends Controller
 
             $request->validate([
                 'user_id' => 'required|string|max:255|exists:users,id',
-                'book_id' => 'required|string|max:255|exists:books,book_id',
+                'book_id' => 'required|string|max:255|exists:books,id',
             ]);
 
             $data = $request->only(

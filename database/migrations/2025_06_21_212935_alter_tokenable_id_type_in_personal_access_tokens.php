@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('authors', function (Blueprint $table) {
-            $table->ulid('id')->primary();
-            $table->string('name');
-            $table->string('nationality');
-            $table->string('birthdate');
-            $table->timestamps();
+        Schema::table('personal_access_tokens', function (Blueprint $table) {
+            $table->char('tokenable_id', 26)->change();
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('authors');
+        Schema::table('personal_access_tokens', function (Blueprint $table) {
+            $table->unsignedBigInteger('tokenable_id')->change();
+        });
     }
 };
